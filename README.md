@@ -172,6 +172,35 @@ As more errors/warnings are converted to exceptions, this operator is less neede
 
 > PHP errors don’t provide stack traces. You have to install a handler to generate them. (But you can’t for fatal errors—see below.)
 
+Still not done.
+
+> PHP parse errors generally just spew the parse state and nothing more, making a forgotten quote terrible to debug.
+
+While parse errors have gotten a bit better, much is still left to be desired. Also see below.
+
+> PHP’s parser refers to e.g. `::` internally as `T_PAAMAYIM_NEKUDOTAYIM`, and the `<<` operator as `T_SL`. I say “internally”, but as above, this is what’s shown to the programmer when `::` or `<<` appears in the wrong place.
+
+Resolved, internal token names are now not included in errors.
+
+> Most error handling is in the form of printing a line to a server log nobody reads and carrying on.
+
+Improvement, lots of errors are now exceptions though there's still a long road to go.
+
+> `E_STRICT` is a thing, but it doesn’t seem to actually prevent much and there’s no documentation on what it actually does.
+
+Error levels are still badly documented.
+
+> `E_ALL` includes all error categories—except `E_STRICT`. (Fixed in 5.4.)
+
+Fixed, whee.
+
+> Weirdly inconsistent about what’s allowed and what isn’t. I don’t know how `E_STRICT` applies here, but these things are okay: \[...] And these things are not: \[...]
+
+Too opinionated to judge, but the rule of the thumb is that parse errors are fatal while runtime errors are fatal only if there's no way to continue (e.g. call to a nonexistent function is game over while reading a nonexistent variable can produce a `null` and continue with a warning). The error handling has gotten stricter over time, but still could use more; not breaking existing code bases too much is a limiting factor here.
+
+> The \__toString method can’t throw exceptions. If you try, PHP will… er, throw an exception. (Actually a fatal error, which would be passable, except…)
+
+Fixed [in 7.4](https://www.php.net/manual/en/migration74.new-features.php).
 
 # Tally
 ...
