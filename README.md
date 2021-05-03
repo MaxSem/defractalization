@@ -1,6 +1,13 @@
 # Is PHP still a fractal of bad design?
 
-Eevee's famous article [PHP: a fractal of bad design](https://eev.ee/blog/2012/04/09/php-a-fractal-of-bad-design/) is pretty influential because it hits pretty close to home. But it was written in 2012 - did PHP get any better since then? I'm writing this in early 2021, and PHP has evolved quite a bit over these 9 years, going from version 5.4 to 8.0. My article concentrates on analyzing whether PHP has improved, not on debating the original article. Full disclosure: I'm a (very minor) contributor to the PHP project.
+Eevee's famous article [PHP: a fractal of bad design](https://eev.ee/blog/2012/04/09/php-a-fractal-of-bad-design/) is pretty influential because it hits so close to home. But it was written in 2012 - did PHP get any better since then? I'm writing this in May 2021, and PHP has evolved quite a bit over these 9 years, going from version 5.4 to 8.0. My article concentrates on analyzing whether PHP has improved, not on debating the original article. Full disclosure: I'm a (very minor) contributor to the PHP project.
+
+For simplicity, each issue from the original article is put into one of the following categories:
+
+* 👍 Completely or mostly resolved
+* 👌 Partially resolved
+* 😒 No substantial improvements
+* 🤷 The point is unclear or too opinionated for me to judge it. In a lot of cases, Eevee essentially appears to complain that PHP is not Python, which I don't think is a reasonable thing to want from a programming language that is not Python. If you disagree, feel free to consider these issues unresolved instead.
 
 For a numerical tl;dr, see the [tally](#Tally).
 
@@ -12,7 +19,7 @@ For a numerical tl;dr, see the [tally](#Tally).
 
 > PHP is inconsistent: strpos, str_rot13
 
-No major improvements.
+😒 Nothing's really changed.
 
 > PHP requires boilerplate: error-checking around C API calls, ===
 
@@ -28,95 +35,95 @@ I believe that over the last years, PHP has proven itself to be a language suita
 
 > PHP is built to keep chugging along at all costs. When faced with either doing something nonsensical or aborting with an error, it will do something nonsensical.
 
-While clearly there are a lot of places where PHP still uses the "garbage in, garbage out" approach, the theme of PHP changes over the last decades was being stricter. While all the changes in this area are way too numerous to list here, [strict types mode](https://www.php.net/manual/en/language.types.declarations.php#language.types.declarations.strict) is a major improvement.
+👌 While clearly there are a lot of places where PHP still uses the "garbage in, garbage out" approach, the theme of PHP changes over the last decades was being stricter. While all the changes in this area are way too numerous to list here, [strict types mode](https://www.php.net/manual/en/language.types.declarations.php#language.types.declarations.strict) is a major improvement.
 
 > PHP takes vast amounts of inspiration from other languages, yet still manages to be incomprehensible to anyone who knows those languages.
 
-PHP has added a lot of syntax borrowed from or inspired by other languages, including lambdas (`(x) => x * x`) and the spaceship operator (`<=>`). Can't say that these outpace the old, "incomprehensible" parts though. However, one criticism from this point has been resolved:
+🤷 "Incomprehensible" is a subjective word. PHP has added a lot of syntax borrowed from or inspired by other languages, including lambdas (`(x) => x * x`) and the spaceship operator (`<=>`). Can't say that these outpace the old, "incomprehensible" parts though. However, one criticism from this issue has been resolved:
 
 > `(int)` looks like C, but `int` doesn’t exist.
 
-You can now specify `int` (and other basic types) as a type of parameters or properties.
+👍 You can now specify `int` (and other basic types) as a type of parameters or properties.
 
 > Weak typing (i.e., silent automatic conversion between strings/numbers/et al) is so complex that whatever minor programmer effort is saved is by no means worth it.
 
-PHP is still a weakly typed language, however with types enforced in a lot of places and [some strictening of type coercion](https://www.php.net/manual/en/migration80.incompatible.php#migration80.incompatible.core.string-number-comparision), it's definitely getting better.
+👌 PHP is still a weakly typed language, however with types enforced in a lot of places and [some strictening of type coercion](https://www.php.net/manual/en/migration80.incompatible.php#migration80.incompatible.core.string-number-comparision), it's definitely getting better.
 
 > Little new functionality is implemented as new syntax; most of it is done with functions or things that look like functions.
 
-Lots of syntactic sugar was added.
+🤷 Lots of syntactic sugar was added. Is that what you've been asking? I hope it is!
 
 > Some of the problems listed on this page do have first-party solutions—if you’re willing to pay Zend for fixes to their open-source programming language.
 
-Too vague of an allegation to say what was meant here.
+🤷 Too vague of an allegation to say what was meant here.
 
 ### [Operators](https://eev.ee/blog/2012/04/09/php-a-fractal-of-bad-design/#operators)
 
 > `==` is useless.
 
-While it has gotten somewhat more strict, I'd say this is mostly unresolved.
+😒 While it has gotten somewhat more strict, I'd say this is mostly unresolved.
 
 > Comparison isn’t much better
 
-Same, probably even less improved.
+😒 Same, probably even less improved.
 
 > Despite the craziness above, and the explicit rejection of Perl’s pairs of string and numeric operators, PHP does not overload `+`. `+` is always addition, and `.` is always concatenation.
 
-Yes, but PHP does not have operator overloading for userland code at all. This is not an inherent problem, as many shiny new languages (like Go) intentionally don't have operator overloading.
+🤷 Yes, but PHP does not have operator overloading for userland code at all. This is not an inherent problem, as many shiny new languages (like Go) intentionally don't have operator overloading.
 
 > The `[]` indexing operator can also be spelled `{}`.
 
-Not anymore. [Deprecated in 7.4 and completely outlawed in 8.0](https://3v4l.org/MCHum).
+👍 Not anymore. [Deprecated in 7.4 and completely outlawed in 8.0](https://3v4l.org/MCHum).
 
 > `[]` can be used on any variable, not just strings and arrays. It returns null and issues no warning.
 
-[Deprecated in 7.4](https://3v4l.org/BSHrZ).
+👍 [Deprecated in 7.4](https://3v4l.org/BSHrZ).
 
 > `[]` cannot slice; it only retrieves individual elements.
 
-Author's preference.
+🤷 Author's preference.
 
 > `foo()[0]` is a syntax error. (Fixed in PHP 5.4.)
 
-Fixed? Oh, cool!
+👍 Already fixed? Oh, cool!
 
 > Unlike (literally!) every other language with a similar operator, `?:` is *left* associative.
 
-Now combining ternary operators [requires parentheses](https://3v4l.org/t8io2), which is arguably even better since it removes any possibility of wrong interpretation.
+👍 Now combining ternary operators [requires parentheses](https://3v4l.org/t8io2), which is arguably even better since it removes any possibility of wrong interpretation.
 
 ### [Variables](https://eev.ee/blog/2012/04/09/php-a-fractal-of-bad-design/#variables)
 
 > There is no way to declare a variable. Variables that don’t exist are created with a null value when first used.
 
-Still the case.
+😒 Still the case. Not necessarily a problem, but there are definitely cases where people would want this.
 
 > Global variables need a global declaration before they can be used.
 
-Basically, Eevee has a personal preference of Python scoping rules here.
+🤷 Basically, Eevee has a personal preference of Python scoping rules here. In any case, global variables are crap and discouraged in basically every coding convention ever.
 
 > There are no references. What PHP calls references are really aliases
 
-Same as above, another case of personal preference.
+🤷 Same as above, another case of personal preference.
 
 > “Referenceness” infects a variable unlike anything else in the language
 
-Still the case.
+😒 Still the case.
 
 > Okay, I lied. There are “SPL types” which also infect variables
 
-???
+👍 I've no idea why would anyone consider a [random obscure PECL extension](https://pecl.php.net/package/spl_types) part of the language, but if you want to be THAT unreasonable, I'll be unreasonable too and mark this as resolved since it's abandoned and doesn't work with PHP 7+.
 
 > A reference can be taken to a key that doesn’t exist within an undefined variable (which becomes an array)
 
-Still the case.
+😒 Still the case.
 
 > Constants are defined by a function call taking a string; before that, they don’t exist.
 
-Some improvements: you can define class constants and constants in global scope (`const FOO = 'bar';`), but the latter doesn't even work in conditionals.
+👌 Some improvements: you can define class constants and constants in global scope (`const FOO = 'bar';`), but the latter doesn't even work in conditionals.
 
 > Variable names are case-sensitive. Function and class names are not.
 
-Still the case.
+😒 Still the case.
 
 ### [Constructs](https://eev.ee/blog/2012/04/09/php-a-fractal-of-bad-design/#constructs)
 
